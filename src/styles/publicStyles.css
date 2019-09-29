@@ -3,10 +3,6 @@
     height: 200px;
 }
 
-.content-card {
-    padding: 20px 20px;
-}
-
 .section-title {
     text-align: center;
     text-decoration: underline;
@@ -29,6 +25,7 @@
     -webkit-box-shadow: 1px 1px 10px 1px rgba(136,136,136,1);
     -moz-box-shadow: 1px 1px 10px 1px rgba(136,136,136,1);
     box-shadow: 1px 1px 10px 1px rgba(136,136,136,1);
+    padding: 20px 20px;
 }
 
 .auth-container {
@@ -195,4 +192,13 @@ input:-webkit-autofill:active  {
 .divider {
     height: 1px;
     background-color: lightgray;
+}
+
+.link-popup {
+    width: 250px;
+}
+
+.text-inline-icon {
+    height: 1em;
+    width: 1em;
 }

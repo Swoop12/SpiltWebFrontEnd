@@ -1,11 +1,20 @@
 import React from 'react'
+import LinkIcon from '../../images/link.svg'
 
-export const Link = (props) => {
-  const { url } = props.contentState.getEntity(props.entityKey).getData();
+export const LinkComponent = (props) => {
+  const { editUrl, handleLinkEdit, componentID } = props.contentState.getEntity(props.entityKey).getData();
+  const absoluteUrl = "http://"+editUrl.url
   return (
-    <a href={url} style={{ "color": "blue" }}>
+    <p style={{display: "inline"}}
+        ref={componentID}>
+         [ <a href={absoluteUrl} style={{ "color": "darkGreen" }}>
       {props.children}
-    </a>
+    </a>] 
+        (<img src={LinkIcon} 
+            alt="Link"
+            className="text-inline-icon"
+            onClick={() => handleLinkEdit(componentID, editUrl)}/>)
+     </p>
   );
 };
 
