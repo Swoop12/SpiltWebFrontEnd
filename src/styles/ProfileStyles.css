@@ -1,0 +1,38 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-image {
+    border-radius: 50%;
+    width: 33%;
+    background-color: white;
+}
+
+.profile-img {
+    clip-path: circle( at center);
+}
+
+.icon-button {
+    height: 54px;
+    width: 54px;
+}
+
+.profile-icons {
+    width: 50%;
+}
+
+.selected-icon {
+    color: #5D8277;
+}
+
+.floating-menu .content-card {
+    margin: 0;
+    padding: 0;
+    min-width: 100px;
+}
+
+.floating-list {
+    padding: 0;
+}

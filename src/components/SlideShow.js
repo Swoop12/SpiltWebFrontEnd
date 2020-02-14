@@ -34,7 +34,6 @@ class SlideShow extends Component {
     }
 
     render() {
-        console.log(this.currentPhoto());
         return (
             <div className="slideshow">
                 <img src={this.currentPhoto()} 

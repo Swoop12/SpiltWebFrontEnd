@@ -1,3 +1,7 @@
+body {
+    padding: 0px;
+}
+
 .header-image {
     color: white;
     height: 200px;
@@ -17,15 +21,23 @@
 
 .flexer {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .content-card {
     border-radius: 4px;
     background-color: #fff;
-    -webkit-box-shadow: 1px 1px 10px 1px rgba(136,136,136,1);
-    -moz-box-shadow: 1px 1px 10px 1px rgba(136,136,136,1);
-    box-shadow: 1px 1px 10px 1px rgba(136,136,136,1);
-    padding: 20px 20px;
+    -webkit-box-shadow: 1px 1px 10px 1px rgba(136, 136, 136, 1);
+    -moz-box-shadow: 1px 1px 10px 1px rgba(136, 136, 136, 1);
+    box-shadow: 1px 1px 10px 1px rgba(136, 136, 136, 1);
+    padding: 16px;
+    margin: 16px;
+}
+
+.drop-shadow {
+    -webkit-box-shadow: 1px 1px 10px 1px rgba(136, 136, 136, 1);
+    -moz-box-shadow: 1px 1px 10px 1px rgba(136, 136, 136, 1);
+    box-shadow: 1px 1px 10px 1px rgba(136, 136, 136, 1);
 }
 
 .auth-container {
@@ -52,7 +64,7 @@
     padding: 8px;
 }
 
-textarea:focus, input:focus{
+textarea:focus, input:focus {
     outline: none;
 }
 
@@ -61,6 +73,13 @@ textarea:focus, input:focus{
     padding: 8px 16px;
     color: #5D8277;
     border: 1px solid #5D8277;
+}
+
+.solid-button {
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: #fff;
+    background-color: #5D8277;
 }
 
 .auth-form {
@@ -77,6 +96,12 @@ textarea:focus, input:focus{
     align-items: center;
     width: 100%;
     height: 100vh;
+}
+
+.auth-subpage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .slideshow {
@@ -97,10 +122,8 @@ textarea:focus, input:focus{
 }
 
 /* Change the white to any color ;) */
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active  {
+
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
@@ -114,15 +137,20 @@ input:-webkit-autofill:active  {
     z-index: 1;
 }
 
-.editor-button{
+.editor-button {
     margin: 4px;
 }
 
-.editor-item{
+.editor-item {
     color: #32322C;
     width: 100%;
     list-style: none;
-    padding: 2px 8px;
+    padding: 8px;
+    display: block;
+}
+
+.editor-ptag {
+    margin: auto
 }
 
 .editor-item:hover {
@@ -161,9 +189,9 @@ input:-webkit-autofill:active  {
 
 .link {
     color: blue;
-  font-family: 'Hoefler Text', Georgia, serif;
-  font-style: italic;
-  text-align: center;
+    font-family: 'Hoefler Text', Georgia, serif;
+    font-style: italic;
+    text-align: center;
 }
 
 .header-one {
@@ -182,6 +210,10 @@ input:-webkit-autofill:active  {
 
 .full-canvas {
     min-height: 100vh;
+    margin-top: 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .canvas-root {
@@ -201,4 +233,285 @@ input:-webkit-autofill:active  {
 .text-inline-icon {
     height: 1em;
     width: 1em;
+}
+
+.hidden-fileupload {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.hidden-fileupload-container {
+    position: relative;
+}
+
+.fa-tan-icon {
+    color: #BFACAA;
+}
+
+.profile-photo-container {
+    border-radius: 50%;
+}
+
+.nav-right-btn {
+    margin: 4px;
+}
+
+.user-message {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 8px;
+    height: 3.5em;
+    width: 90%;
+    margin: 16px auto;
+}
+
+.user-message-p {
+    padding: 8px;
+    width: 100%;
+    margin: auto 16px;
+}
+
+.horizontal-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.horizontal-even-spacing {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.vertical-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+}
+
+.space-even {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.align-end {
+    display: flex;
+    align-self: flex-end;
+}
+
+.align-start {
+    display: flex;
+    align-self: flex-start;
+}
+
+.align-all-end {
+    display: flex;
+    align-items: flex-end;
+}
+
+.align-all-center {
+    display: flex;
+    align-items: center;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.justify-flex-end {
+    display: flex;
+    justify-content: flex-end
+}
+
+.justify-center {
+    display: flex;
+    justify-content: center;
+}
+
+.absolute {
+    position: "absolute"
+}
+
+.coverart {
+    height: 200px;
+    background-image: url('https://image.shutterstock.com/image-vector/coffee-line-icons-beans-hot-600w-1404467408.jpg');
+    background-repeat: no-repeat;
+    background-color: #d0d0d0;
+    background-position: top;
+    background-size: cover;
+}
+
+.title-blank-state {
+    background-color: #c0c0c0;
+    height: 16px;
+    width: 30%;
+    margin: 24px;
+    border-radius: 8px;
+}
+
+.titles-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-blank-state {
+    background-color: #d0d0d0;
+    height: 8px;
+    margin: 16px;
+    width: 80%;
+    border-radius: 4px;
+}
+
+.post-blankstate-container {
+    width: 90%;
+}
+
+.preview-thumbnail {
+    width: 200px;
+    margin: 8px;
+}
+
+.ql-font-roboto {
+    font-family: 'Roboto', sans-serif;
+    font-size: 5em;
+}
+
+.modal-backdrop {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #32322C22
+}
+
+.modal-popup {
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    width: 30%;
+}
+
+.center-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center {
+    text-align: center;
+    vertical-align: center;
+}
+
+.centered {
+    text-align: center;
+    margin: auto;
+}
+
+.square {
+    position: relative;
+    width: 100%;
+}
+
+.square:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+}
+
+.square-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.square-container {
+    width: 100%;
+    /* height: auto; */
+}
+
+*>.square-container {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 750px) {
+    .if-space-allows {
+        display: none;
+    }
+}
+
+.standard-spacing-container>* {
+    margin: 16px;
+}
+
+.elements-fill>* {
+    width: 100%;
+}
+
+.post-card-image {
+    object-fit: center;
+    object-position: center center;
+    overflow: hidden;
+}
+
+@media (min-width: 800px) {
+    .post-card-image {
+        width: 200px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 800px) {
+    .post-card-image {
+        width: 100%;
+        height: 100px;
+    }
+}
+
+.light-container {
+    padding: 24px;
+}
+
+.medium-container {
+    padding: 24px 10vw;
+}
+
+.no-space {
+    padding: 0;
+    margin: 0;
+}
+
+* .text-container {
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+}
+
+@media (max-width: 800px) {
+    .desktop-only {
+        visibility: hidden
+    }
+}
+
+.nav-itemz {
+    text-align: center;
+    vertical-align: middle;
+    margin: auto 0;
+    padding: 24px;
 }

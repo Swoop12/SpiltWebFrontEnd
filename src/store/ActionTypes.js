@@ -1,0 +1,7 @@
+export const ADD_ERROR = "ADD_ERROR"
+export const REMOVE_ERROR = "REMOVE_ERROR"
+export const SET_CURRENT_USER = "SET_CURRENT_USER"
+export const LOGOUT = "LOGOUT"
+export const LOAD_POSTS = "LOAD_POSTS"
+export const CREATE_POST = "CREATE_POST"
+export const DELETE_POST = "DELETE_POST"
