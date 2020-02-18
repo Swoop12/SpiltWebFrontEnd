@@ -85,10 +85,10 @@ export function Footnote(props) {
     const context = useContext(AppContext)
     return (
         <p className="footnote-text typography"
-            style={{ 
+            style={{
                 color: context.theme.text,
-                ...props.style 
-             }}>
+                ...props.style
+            }}>
             {props.children}
         </p>
     )

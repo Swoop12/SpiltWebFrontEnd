@@ -40,11 +40,18 @@ class ImageConverter extends React.Component {
         reader.readAsDataURL(file)
     }
 
+    onError = () => {
+        debugger
+        this.setState({imgSrc: null})
+    }
+
     views = () => {
         const src = this.state.imgSrc || this.props.src
         if (src) {
-            return <img src={src}
+            return <img
+                src={src}
                 alt="uploaded"
+                onError={this.onError}
                 style={{
                     width: "100%",
                     maxWidth: "400px",

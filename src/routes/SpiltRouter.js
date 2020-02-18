@@ -39,7 +39,14 @@ class SpiltRouter extends Component {
         return (
             <BrowserRouter>
                 <Route path="/"
-                    render={props => <Navigation {...props} currentPath={props.location.pathname} />} />
+                    render={props => {
+                        console.log(props)
+                        debugger
+                        if (!props.location.pathname.includes("signin") && !props.location.pathname.includes("signup")) {
+                            return (<Navigation {...props} currentPath={props.location.pathname} />)
+                        }
+                    }
+                    } />
                 <Switch>
                     <Route path="/debug"
                         render={props => <Debugger {...props} />} />
@@ -97,7 +104,7 @@ class SpiltRouter extends Component {
                             console.log("PROPS FOR POST DETAIL", props)
                             return (<PostDetail {...props} />)
                         }} />
-                    <Route path="/profile" component={ProfilePage} />
+                    <Route path={`/profile/:userId`} component={ProfilePage} />
                     <Route path="/about"
                         render={props => {
                             return (<About {...props} />)

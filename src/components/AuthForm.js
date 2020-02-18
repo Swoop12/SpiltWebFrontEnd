@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import SpiltLogo from '../images/SpiltLogo.jpg';
 import { serviceFactory } from '../services/ServiceFactory';
+import AppContext from '../contexts/AppContext';
 
 class AuthForm extends Component {
+
+    static contextType = AppContext
+
     constructor(props) {
         super(props)
 
@@ -23,11 +27,16 @@ class AuthForm extends Component {
         const { email, password, name, confirmPassword } = this.state
         if (this.props.signIn) {
             this.authService.loginUser(email, password)
-            this.props.loginUser({email,password})
-            .then(() => this.props.history.push('/'))
+                .then(user => {
+                    this.context.setCurrentUser(user)
+                    this.props.history.push('/')
+                })
         } else {
             this.authService.signUpUser(email, name, password, confirmPassword)
-            .then(() => this.props.history.push('/'))
+                .then(user => {
+                    this.context.setCurrentUser(user)
+                    this.props.history.push('/')
+                })
         }
     }
 
@@ -99,7 +108,7 @@ class AuthForm extends Component {
 
     onSignIn = () => {
         const { email, password } = this.state
-        this.authenticationService.loginUser(email,password)
+        this.authenticationService.loginUser(email, password)
             .then()
             .catch()
     }

@@ -30,6 +30,11 @@ class AuthenticationService {
             })
     }
 
+    logout = () => {
+        localStorage.setItem('jwtToken', null)
+        this.networkingService.setTokenHeader(null)
+    }
+
     setTokenHeader = (token) => {
         localStorage.setItem("jwtToken", token)
         this.networkingService.setTokenHeader(token)
@@ -42,6 +47,10 @@ class AuthenticationService {
             const decodedUser = this.tokenDecoder(jwtToken)
             return decodedUser
         }
+    }
+
+    updateUserInfo = (updates) => {
+        return this.networkingService.networkCall('put')
     }
 }
 

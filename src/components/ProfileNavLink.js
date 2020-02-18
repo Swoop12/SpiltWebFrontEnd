@@ -1,29 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import FloatingMenu from './FloatingMenu'
-import Avatar from './Avatar';
 import Controller from '../containers/Controller';
 import Select from '../containers/Select'
+import AppContext from '../contexts/AppContext';
+import { NavItem } from './Navigation';
 
 
 function ProfileNavLink(props) {
+    const { currentUser, logout } = useContext(AppContext)
     return (
-        <div className="profile-navlink">
             <Controller>
                 <Select>
-                    <div className="horizontal-container">
-                        <Avatar userId={props.userId}
-                                imageStyle={{width: "75px"}}/>
-                        <p className="centered"
-                            style={{marginLeft: "-30px"}}>{props.name}</p>
-                    </div>
+                    <div className="nav-itemz">Profile</div>
                 </Select>
                 <div>
-                    <FloatingMenu 
-                        logout={props.logout}
-                        history={props.history}/>
+                    <FloatingMenu
+                        logout={logout}
+                        history={props.history}
+                        currentUser={currentUser} />
                 </div>
             </Controller>
-        </div>
     )
 }
 

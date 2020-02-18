@@ -18,7 +18,8 @@ class App extends Component {
       toggleTheme: this.toggleTheme,
       currentUser: userFromLocalStorage,
       setCurrentUser: this.setCurrentUser,
-      errorService: serviceFactory.errorService()
+      errorService: serviceFactory.errorService(),
+      logout: this.logout
     }
   }
 
@@ -31,6 +32,11 @@ class App extends Component {
 
   setCurrentUser = user => {
     this.setState({currentUser: user})
+  }
+
+  logout = () => {
+    authService.logout()
+    this.setState({currentUser: null})
   }
 
   render() {

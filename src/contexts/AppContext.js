@@ -6,7 +6,8 @@ const AppContext = React.createContext({
     theme: {},
     toggleTheme: () => {},
     errorService: {},
-    setErrorService: () => {}
+    setErrorService: () => {},
+    logout: () => {}
 })
 
 export default AppContext;

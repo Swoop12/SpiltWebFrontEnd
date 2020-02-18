@@ -4,7 +4,7 @@ import RecipeCard from '../Elements/RecipeCard'
 function RecipeList(props) {
     const recipeListItems = () => {
         return props.recipes.map(recipe => {
-            const route = props.match.path + "/" + recipe._id
+            const route = "/brew/" + recipe._id
             return (
                 <RecipeCard
                     style={{

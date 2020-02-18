@@ -51,7 +51,6 @@ class PostCard extends React.Component {
         }
         const date = new Date(post.date)
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        debugger
         return (
             <InternalLink to={`/posts/${post._id}`}>
                 <Card className="horizontal-container space-between"

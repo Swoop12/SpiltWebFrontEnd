@@ -8,19 +8,25 @@ import Avatar from './Avatar'
 import PostList from '../containers/PostList'
 import { Switch, Link, Route, Redirect } from 'react-router-dom'
 import { serviceFactory } from '../services/ServiceFactory'
-import Modal from '@material-ui/core/Modal';
-import UploadImagePopup from '../containers/UploadImagePopup'
+import ProductList from './ui/Pages/ProductList'
+import RecipeList from './ui/Elements/RecipeList'
+import AppContext from '../contexts/AppContext'
+import ImageConverter from './ui/Elements/ImageUpload'
 
 const postService = serviceFactory.postService()
+const productService = serviceFactory.productService()
+const recipeService = serviceFactory.recipeService()
 
 class ProfilePage extends Component {
 
+    static contextType = AppContext
+
     constructor(props) {
         super(props)
-
         this.state = {
-            contentItems: ["posts", "shop", "locations"],
+            contentItems: ["posts", "shop", "recipes"],
             selectedItem: "posts",
+            posts: [],
             open: false
         }
     }
@@ -31,7 +37,7 @@ class ProfilePage extends Component {
                 return ArticleImg
             case "shop":
                 return CartImg
-            case "locations":
+            case "recipes":
                 return ShopImg
             default:
                 return null
@@ -78,27 +84,61 @@ class ProfilePage extends Component {
         })
     }
 
-    postPromise = () => {
-        const authorId = this.props.currentUser.user.id
-        const authorPredicate = { author: authorId }
-        return postService.loadPosts(authorPredicate)
+    authorPredicate = () => {
+        const authorId = this.props.currentUser.id
+        return { author: authorId }
+    }
+
+    fetchPosts = () => {
+        postService.loadPosts(this.authorPredicate())
+            .then(posts => {
+                this.setState({ posts })
+            })
+    }
+
+    fetchProducts = () => {
+        productService.fetchProducts()
+            .then(products => {
+                this.setState({ products })
+            })
+    }
+
+    fetchRecipes = () => {
+        recipeService.loadRecipes()
+            .then(recipes => {
+                this.setState({ recipes })
+            })
     }
 
     contentList = () => {
         return (
             <Switch>
                 <Route exact path={`${this.props.match.path}`} render={props =>
-                    <Redirect to={`${this.props.match.path}/posts`} />} />
+                    <Redirect to={`${this.props.match.url}/posts`} />} />
                 <Route path={`${this.props.match.path}/posts`} render={props => {
+                    this.fetchPosts()
                     return (
-                        <div style={{ width: '90%' }}>
-                            <PostList {...props}
-                                posts={this.postPromise()} />
-                        </div>
+                        <PostList {...props}
+                            posts={this.state.posts} />
                     )
                 }} />
-                <Route path={`${this.props.match.path}/shop`} render={props => <PostList />} />
-                <Route path={`${this.props.match.path}/locations`} render={props => <PostList />} />
+                <Route path={`${this.props.match.path}/shop`} render={props => {
+                    this.fetchProducts()
+                    return (
+                        <ProductList
+                            products={this.state.products || []}
+                        />
+                    )
+                }} />
+                <Route
+                    path={`${this.props.match.path}/recipes`}
+                    render={props => {
+                        this.fetchRecipes()
+                        return (
+                            <RecipeList
+                                recipes={this.state.recipes || []} />
+                        )
+                    }} />
             </Switch>
         )
     }
@@ -108,30 +148,26 @@ class ProfilePage extends Component {
     }
 
     render() {
-        const { currentUser } = this.props
+        const { currentUser } = this.context
         const avatarStyle = {
             maxWidth: "50%",
+            width: "300px"
         }
         return (
             <div className="profile-container">
                 <div onClick={this.handleOpen}
                     className="center-container">
-                    <Avatar userId={currentUser.user.id}
-                            imageStyle={avatarStyle} />
+                    <ImageConverter
+                        src={currentUser.profileImageUrl}
+                        style={avatarStyle}
+                        onUpload={this.handleImageUploadCallback}
+                    >Profile Photo</ImageConverter>
                 </div>
                 <div>
                     <h4>{currentUser.name}</h4>
                 </div>
                 {this.profileIcons()}
                 {this.contentList()}
-                <Modal
-                    open={this.state.open}
-                    onClose={this.handleClose}>
-                    <UploadImagePopup 
-                        onUploadCallback={this.handleImageUploadCallback}
-                        uploadId={this.props.currentUser.user.id}
-                        onCancel={this.handleClose}/>
-                </Modal>
             </div>
         )
     }
@@ -145,16 +181,6 @@ ProfilePage.defaultProps = {
         products: [],
         shops: []
     }
-}
-
-function mapStateToProps(state) {
-    return {
-        currentUser: state.currentUser
-    }
-}
-
-const mapDispatchToProps = {
-    fetchPosts: postService.fetchPosts
 }
 
 export default ProfilePage;
