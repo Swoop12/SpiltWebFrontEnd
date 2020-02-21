@@ -40,7 +40,7 @@ class Navigation extends React.Component {
         return this.navItemModels.map(model => {
             var isSelected = this.props.currentPath.includes(model.link)
             const { currentPath } = this.props
-            if (currentPath.includes(`profile/${this.context.currentUser.id}`)) {
+            if (this.context.currentUser && currentPath.includes(`profile/${this.context.currentUser.id}`)) {
                 isSelected = false
             } else if (model.link === "/") {
                 isSelected = currentPath === model.link
@@ -59,12 +59,12 @@ class Navigation extends React.Component {
             const { currentUser } = this.context
             if (currentUser) {
                 return (
-                    <div style={{ 
+                    <div style={{
                         marginRight: '16px',
                         cursor: 'default'
-                        }}>
+                    }}>
                         <ProfileNavLink
-                            {...this.props}
+                            currentUser={currentUser}
                         />
                     </div>
                 )

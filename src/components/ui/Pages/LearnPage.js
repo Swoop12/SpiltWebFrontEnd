@@ -5,6 +5,7 @@ import PostList from '../../../containers/PostList';
 import SectionHeader from '../Elements/SectionHeader';
 import Spinner from 'react-spinkit'
 import AppContext from '../../../contexts/AppContext';
+import { CreateButton } from '../Elements/Buttons';
 
 class LearnPage extends React.Component {
 
@@ -35,12 +36,19 @@ class LearnPage extends React.Component {
             return <Spinner name='chasing-dots' />
         } else {
             return (
-                <div style={{backgroundColor: this.context.theme.background}}>
+                <div style={{ backgroundColor: this.context.theme.background }}>
                     <FeaturedContent />
                     <SectionHeader>Recent Posts</SectionHeader>
                     <div className="light-container">
                         <PostList posts={this.state.posts} />
                     </div>
+                    <CreateButton
+                        link={"/posts/new"}
+                        style={{
+                            position: "fixed",
+                            left: "90vw",
+                            bottom: "32px"
+                        }} />
                 </div>
             )
         }

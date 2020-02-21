@@ -7,7 +7,7 @@ function FloatingMenu(props) {
     return (
         <div className="floating-menu">
             <div className="content-card floating-content">
-                <Link to={`/profile/${props.currentUser.id}/posts`} 
+                <Link to={`/profile/${props.currentUser._id}/posts`} 
                     className="editor-item">Profile</Link>
                 <div to="/signin" 
                     className="editor-item">

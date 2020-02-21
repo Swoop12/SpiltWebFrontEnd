@@ -6,9 +6,9 @@ class RecipeService {
         this.errorService = errorService
     }
 
-    loadRecipes = () => {
+    loadRecipes = (predicate) => {
         const path = 'recipes'
-        return this.networkingService.networkCall('get', path)
+        return this.networkingService.networkCall('get', path, null, predicate)
             .catch(error => {
                 this.errorService.addError(error)
                 return error

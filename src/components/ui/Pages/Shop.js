@@ -23,8 +23,13 @@ class Shop extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            products: []
+            products: [],
+            filterSelection: [optionsTree[0]]
         }
+    }
+
+    onFilterSelectionChange = selections => {
+        this.setState({filterSelection: selections})
     }
 
     render() {
@@ -34,7 +39,9 @@ class Shop extends Component {
             <div style={{ background: theme.background }}>
                 <Banner />
                 <StackedFilter
-                    optionTree={optionsTree} />
+                    optionTree={optionsTree}
+                    selected={this.state.filterSelection}
+                    onChange={this.onFilterSelectionChange} />
                 <ProductList 
                     {...this.props}
                     products={this.state.products}

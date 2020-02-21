@@ -1,5 +1,5 @@
-import jwtDecode from 'jwt-decode'
-import NetworkingService from './NetworkingService'
+import NetworkingService from './NetworkingService';
+const jwtDecode = require('jwt-decode');
 
 class AuthenticationService {
 
@@ -31,8 +31,8 @@ class AuthenticationService {
     }
 
     logout = () => {
-        localStorage.setItem('jwtToken', null)
-        this.networkingService.setTokenHeader(null)
+        localStorage.setItem('jwtToken', false)
+        this.networkingService.setTokenHeader(false)
     }
 
     setTokenHeader = (token) => {
@@ -42,15 +42,16 @@ class AuthenticationService {
 
     loadUserFromLocalStorageToken = () => {
         const jwtToken = localStorage.jwtToken
-        if (jwtToken && jwtToken !== "false") {
+        if (jwtToken && jwtToken !== "false" && jwtToken !== "null") {
             this.setTokenHeader(jwtToken)
+            debugger
             const decodedUser = this.tokenDecoder(jwtToken)
             return decodedUser
         }
     }
 
-    updateUserInfo = (updates) => {
-        return this.networkingService.networkCall('put')
+    updateUserInfo = (userId, updates) => {
+        return this.networkingService.networkCall('put', `auth/${userId}`, updates)
     }
 }
 

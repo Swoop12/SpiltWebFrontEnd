@@ -18,8 +18,13 @@ class ProductService {
         return this.networkingService.networkCall('post', 'products', post)
     }
 
-    fetchProducts = () => {
-        return this.networkingService.networkCall("get", "products")
+    fetchProducts = (predicate, responseGroups) => {
+        const finalPredicate = {
+            ...predicate,
+            repsonseGroups: responseGroups
+        }
+        debugger
+        return this.networkingService.networkCall("get", "products", null, finalPredicate)
     }
 
     fetchProductById = id => {

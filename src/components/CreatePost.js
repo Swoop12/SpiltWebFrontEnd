@@ -76,7 +76,7 @@ class CreatePost extends React.Component {
 
   saveInitialPost = () => {
     const initialContent = this.state.delta
-    const authorId = this.context.currentUser._id
+    const authorId = this.context.currentUser.id
     return this.postService.createPost("Untitled", "", authorId, initialContent)
       .then(post => {
         this.props.history.replace(`${post._id}/edit`, "Draft Post")

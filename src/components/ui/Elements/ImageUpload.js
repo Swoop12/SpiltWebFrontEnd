@@ -27,12 +27,10 @@ class ImageConverter extends React.Component {
             this.setState({ imgSrc: reader.result })
             serviceFactory.fileUploadService().uploadPhoto(file)
                 .then((url) => {
-                    debugger
                     if (this.props.onUpload) {
                         this.props.onUpload(url)
                     }
                 }).catch(error => {
-                    debugger
                     // TODO: - Error Handling
                     alert(error)
                 })
@@ -41,7 +39,6 @@ class ImageConverter extends React.Component {
     }
 
     onError = () => {
-        debugger
         this.setState({imgSrc: null})
     }
 
@@ -60,14 +57,13 @@ class ImageConverter extends React.Component {
         } else {
             return (
                 <OutlineButton>
-                    {this.props.title || "Upload"}
+                    {this.props.title || this.props.children || "Upload"}
                 </OutlineButton>
             )
         }
     }
 
     render() {
-        debugger
         return (
             <div className="hidden-fileupload-container">
                 <input type="file"

@@ -4,6 +4,7 @@ import SlideShow from '../components/SlideShow';
 import appScreenShots from '../images/appScreenShot';
 import { SimpleButton } from '../components/ui/Elements/Buttons';
 import { InternalLink } from '../components/ui/Elements/Typography';
+import AlreadySignedUp from '../components/AlreadySignedUp';
 
 function AuthPage(props) {
     console.log("AUTH PAGE PROPS", props)
@@ -19,6 +20,7 @@ function AuthPage(props) {
             <SlideShow photos={appScreenShots} />
             <div className="auth-subpage">
                 <AuthForm {...props} />
+                <AlreadySignedUp signIn={props.signIn} />
             </div>
         </div>
     )

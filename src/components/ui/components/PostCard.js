@@ -77,11 +77,13 @@ class PostCard extends React.Component {
                             <Subhead>
                                 {date.toLocaleDateString('en-US', options)}
                             </Subhead>
-                            <InternalLink to={`roasters/${post.author._id}`}>
-                                <Body
-                                    style={{color: this.context.theme.primary}}
-                                >{post.author.name}</Body>
-                            </InternalLink>
+                            {post.author && (
+                                <InternalLink to={`roasters/${post.author._id}`}>
+                                    <Body
+                                        style={{ color: this.context.theme.primary }}
+                                    >{post.author.name}</Body>
+                                </InternalLink>
+                            )}
                         </div>
                     </div >
                 </Card >

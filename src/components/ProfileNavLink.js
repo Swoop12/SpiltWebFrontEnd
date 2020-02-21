@@ -7,6 +7,7 @@ import { NavItem } from './Navigation';
 
 
 function ProfileNavLink(props) {
+    debugger
     const { currentUser, logout } = useContext(AppContext)
     return (
             <Controller>

@@ -26,9 +26,8 @@ class AuthForm extends Component {
         console.log("ATUHFORM State", this.state)
         const { email, password, name, confirmPassword } = this.state
         if (this.props.signIn) {
-            this.authService.loginUser(email, password)
+            this.context.login(email, password)
                 .then(user => {
-                    this.context.setCurrentUser(user)
                     this.props.history.push('/')
                 })
         } else {

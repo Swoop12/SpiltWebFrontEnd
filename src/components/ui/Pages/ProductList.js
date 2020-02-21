@@ -10,7 +10,8 @@ function ProductList(props) {
         debugger
         return props.products.map(product => {
             return (
-                <ProductCard product={product}
+                <ProductCard
+                    product={product}
                     linkTo={`/shop/${product._id}`} />
             )
         })
@@ -18,7 +19,10 @@ function ProductList(props) {
     return (
         <div
             className="flexer justify-center"
-            style={{ background: theme.background }}>
+            style={{ 
+                background: theme.background,
+                width: "100%"
+                 }}>
             {ProductCards()}
         </div>
     )

@@ -1,8 +1,10 @@
 import React from 'react';
 import RecipeCard from '../Elements/RecipeCard'
+import Spinner from 'react-spinkit'
 
 function RecipeList(props) {
     const recipeListItems = () => {
+        debugger
         return props.recipes.map(recipe => {
             const route = "/brew/" + recipe._id
             return (
@@ -17,9 +19,17 @@ function RecipeList(props) {
         })
     }
 
+    const views = () => {
+        if(!props.recipes) {
+            return (<Spinner name='chasing-dots' />)
+        } else {
+            return recipeListItems()
+        }
+    }
+
     return (
         <div className="flexer justify-center">
-            {recipeListItems()}
+            {views()}
         </div>
     )
 }

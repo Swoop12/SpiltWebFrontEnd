@@ -1,21 +1,20 @@
 import React, { Component } from 'react'
 import '../styles/ProfileStyles.css'
 import ProfileEmptyState from '../images/profile.svg'
-import ArticleImg from '../images/article.svg'
-import CartImg from '../images/cart.svg'
-import ShopImg from '../images/shop.svg'
-import Avatar from './Avatar'
 import PostList from '../containers/PostList'
-import { Switch, Link, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { serviceFactory } from '../services/ServiceFactory'
 import ProductList from './ui/Pages/ProductList'
 import RecipeList from './ui/Elements/RecipeList'
 import AppContext from '../contexts/AppContext'
 import ImageConverter from './ui/Elements/ImageUpload'
+import StackedFilter from './ui/Elements/StackedFilter'
+import { Title1 } from './ui/Elements/Typography'
 
 const postService = serviceFactory.postService()
 const productService = serviceFactory.productService()
 const recipeService = serviceFactory.recipeService()
+const authService = serviceFactory.authenticationService()
 
 class ProfilePage extends Component {
 
@@ -24,24 +23,35 @@ class ProfilePage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            contentItems: ["posts", "shop", "recipes"],
+            contentItems: ["posts", "products", "recipes"],
             selectedItem: "posts",
-            posts: [],
-            open: false
+            open: false,
+            filterSelection: ["Posts"]
         }
     }
 
-    imageFor(contentType) {
-        switch (contentType) {
-            case "posts":
-                return ArticleImg
-            case "shop":
-                return CartImg
-            case "recipes":
-                return ShopImg
-            default:
-                return null
+    componentDidMount() {
+        const userId = this.props.match.params.userId
+        const pathComponents = this.props.location.pathname.split('/')
+        const idIndex = pathComponents.indexOf(userId)
+        const filterComponents = pathComponents.slice(idIndex + 1).flat(1)
+        this.setState({filterSelection: filterComponents})
+    }
+
+    options = 
+        {"Posts": [
+            "Draft",
+            "Published"
+        ],
+        "Recipes": {}
         }
+
+
+    onFilterSelectionChange = selections => {
+        debugger
+        const pathComponents = selections.join('/')
+        this.props.history.push(`${this.props.match.url}/${pathComponents}`)
+        this.setState({filterSelection: selections})
     }
 
     handleOpen = () => {
@@ -52,32 +62,6 @@ class ProfilePage extends Component {
         this.setState({ open: false })
     };
 
-    profileIcons() {
-        let contentImages = this.state.contentItems.map((contentType) => {
-            var style
-            console.dir(this.props)
-            if (contentType === this.state.selectedItem) {
-                style = { fill: "#5D8277 !important" }
-                console.log(style)
-            }
-            return (
-                <Link to={`${this.props.match.url}/${contentType}`}>
-                    <img
-                        src={this.imageFor(contentType)}
-                        alt={contentType}
-                        className="icon-button"
-                        style={style}
-                        onClick={() => this.setSelected(contentType)} />
-                </Link>
-            )
-        })
-        return (
-            <div className="horizontal-container space-even profile-icons">
-                {contentImages}
-            </div>
-        )
-    }
-
     setSelected = (item) => {
         this.setState({
             selectedItem: item
@@ -85,45 +69,57 @@ class ProfilePage extends Component {
     }
 
     authorPredicate = () => {
-        const authorId = this.props.currentUser.id
+        const authorId = this.props.match.params.userId
+        debugger
         return { author: authorId }
     }
 
     fetchPosts = () => {
-        postService.loadPosts(this.authorPredicate())
+        postService.loadPosts(this.authorPredicate(), ['author'])
             .then(posts => {
+                debugger
                 this.setState({ posts })
             })
     }
 
     fetchProducts = () => {
-        productService.fetchProducts()
+        productService.fetchProducts(this.authorPredicate())
             .then(products => {
                 this.setState({ products })
             })
     }
 
     fetchRecipes = () => {
-        recipeService.loadRecipes()
+        recipeService.loadRecipes(this.authorPredicate())
             .then(recipes => {
                 this.setState({ recipes })
             })
     }
 
+    filterPosts = (status) => {
+        if (!this.state.posts) { return null }
+        return this.state.posts.filter(post => post.status.toLowerCase() === status.toLowerCase())
+    }
+
     contentList = () => {
+        const postStatusFilter = this.state.filterSelection[1]
+        const displayedPosts = postStatusFilter ? this.filterPosts(postStatusFilter) : this.state.posts
         return (
             <Switch>
                 <Route exact path={`${this.props.match.path}`} render={props =>
                     <Redirect to={`${this.props.match.url}/posts`} />} />
                 <Route path={`${this.props.match.path}/posts`} render={props => {
-                    this.fetchPosts()
+                    if (!this.state.posts) { this.fetchPosts() }
+                    debugger
                     return (
-                        <PostList {...props}
-                            posts={this.state.posts} />
+                        <div className="medium-container" style={{ width: "100%" }}>
+                            <PostList {...props}
+                                posts={displayedPosts || []} />
+                        </div>
                     )
                 }} />
-                <Route path={`${this.props.match.path}/shop`} render={props => {
-                    this.fetchProducts()
+                <Route path={`${this.props.match.path}/products`} render={props => {
+                    if (!this.state.products) { this.fetchProducts() }
                     return (
                         <ProductList
                             products={this.state.products || []}
@@ -133,7 +129,7 @@ class ProfilePage extends Component {
                 <Route
                     path={`${this.props.match.path}/recipes`}
                     render={props => {
-                        this.fetchRecipes()
+                        if (!this.state.recipes) { this.fetchRecipes() }
                         return (
                             <RecipeList
                                 recipes={this.state.recipes || []} />
@@ -143,20 +139,26 @@ class ProfilePage extends Component {
         )
     }
 
-    handleImageUploadCallback = (photo, error) => {
-        alert("Image callback")
+    handleImageUploadCallback = (url) => {
+        const updates = { profileImageUrl: url }
+        const userId = this.props.match.params.userId
+        authService.updateUserInfo(userId, updates)
+            .then(user => {
+                debugger
+                this.context.setCurrentUser(user)
+            })
     }
 
     render() {
-        const { currentUser } = this.context
+        const { currentUser, theme } = this.context
         const avatarStyle = {
             maxWidth: "50%",
             width: "300px"
         }
         return (
-            <div className="profile-container">
+            <div className="profile-container standard-spacing-container" style={{ background: theme.background }}>
                 <div onClick={this.handleOpen}
-                    className="center-container">
+                    className="center-container profile-img">
                     <ImageConverter
                         src={currentUser.profileImageUrl}
                         style={avatarStyle}
@@ -164,9 +166,13 @@ class ProfilePage extends Component {
                     >Profile Photo</ImageConverter>
                 </div>
                 <div>
-                    <h4>{currentUser.name}</h4>
+                    <Title1>{currentUser.name}</Title1>
                 </div>
-                {this.profileIcons()}
+                <StackedFilter
+                    optionTree={this.options}
+                    selected={this.state.filterSelection}
+                    onChange={this.onFilterSelectionChange}
+                />
                 {this.contentList()}
             </div>
         )

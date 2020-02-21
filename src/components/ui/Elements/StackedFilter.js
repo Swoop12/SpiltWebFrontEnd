@@ -101,32 +101,17 @@ class StackedFilter extends Component {
 
     constructor(props) {
         super(props)
-        if (!props.optionTree) {
-            this.state = {
-                optionTree: [],
-                selected: []
-            }
-            return
-        }
-
-        this.state = {
-            optionTree: props.optionTree,
-            selected: props.selected || [props.optionTree[0]]
-        }
         this.filterSelected = this.filterSelected.bind(this)
     }
 
     setSelection(selected) {
-        this.setState({
-            selected: selected
-        })
         if (this.props.onChange) {
             this.props.onChange(selected)
         }
     }
 
     filterSelected = (filter, layerNumber) => {
-        const previousSelected = this.state.selected.slice()
+        const previousSelected = this.props.selected.slice()
         var newSelected
         console.log("PreviousSelection", previousSelected)
         console.log("This", this)
@@ -144,8 +129,8 @@ class StackedFilter extends Component {
     }
 
     buildlayers = () => {
-        var selections = this.state.selected.slice()
-        var currentTree = this.state.optionTree
+        var selections = this.props.selected.slice()
+        var currentTree = this.props.optionTree
         var layers = []
         while (selections) {
             if (!currentTree) {
@@ -175,13 +160,13 @@ class StackedFilter extends Component {
             filters={layer}
             filterSelected={this.filterSelected}
             layerNumber={index}
-            selected={this.state.selected} />))
+            selected={this.props.selected} />))
     }
 
     render() {
         return (
-            <div>
-                {this.layersForTree(this.state.optionTree)}
+            <div style={{width: "100%"}}>
+                {this.layersForTree(this.props.optionTree)}
             </div>
         )
     }

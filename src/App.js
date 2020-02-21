@@ -19,7 +19,8 @@ class App extends Component {
       currentUser: userFromLocalStorage,
       setCurrentUser: this.setCurrentUser,
       errorService: serviceFactory.errorService(),
-      logout: this.logout
+      logout: this.logout,
+      login: this.login
     }
   }
 
@@ -31,22 +32,32 @@ class App extends Component {
   }
 
   setCurrentUser = user => {
-    this.setState({currentUser: user})
+    const userId = user.id || user._id
+    const currentUser = { ...user, id: userId, _id: userId }
+    this.setState({ currentUser: currentUser })
+  }
+
+  login = (email, password) => {
+    return authService.loginUser(email, password)
+      .then(user => {
+        this.setCurrentUser(user)
+        return user
+      })
   }
 
   logout = () => {
     authService.logout()
-    this.setState({currentUser: null})
+    this.setState({ currentUser: null })
   }
 
   render() {
     return (
       <AppContext.Provider value={this.state}>
-          <Router>
-            <div>
-              <SpiltRouter />
-            </div>
-          </Router>
+        <Router>
+          <div>
+            <SpiltRouter />
+          </div>
+        </Router>
       </AppContext.Provider>
 
     );
