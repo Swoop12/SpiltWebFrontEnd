@@ -17,6 +17,7 @@ import Shop from '../components/ui/Pages/Shop'
 import ShopDetail from "../components/ui/Pages/ShopDetail";
 import ShopTemplate from "../components/ui/Pages/ShopNew";
 import BrewDetail from "../components/ui/Pages/BrewDetail";
+import NotFoundPage from "../components/NotFoundPage";
 
 class SpiltRouter extends Component {
 
@@ -79,7 +80,7 @@ class SpiltRouter extends Component {
                         }} />
                     <Route path={"/brew/new"}
                         render={props => {
-                            if(!this.context.currentUser) { return <Redirect to={{pathname: "/signin", from: props.location}}/>}
+                            if (!this.context.currentUser) { return <Redirect to={{ pathname: "/signin", from: props.location }} /> }
                             return (<BrewNew {...props} />)
                         }} />
                     <Route exact path="/brew/:recipeId"
@@ -88,7 +89,7 @@ class SpiltRouter extends Component {
                         }} />
                     <Route path="/posts/:id/edit"
                         render={props => {
-                            if(!this.context.currentUser) { return <Redirect to={{pathname: "/signin", from: props.location}}/>}
+                            if (!this.context.currentUser) { return <Redirect to={{ pathname: "/signin", from: props.location }} /> }
                             return (<CreatePost edit={true} {...props} />)
                         }} />
                     <Route path="/posts/new"
@@ -109,6 +110,9 @@ class SpiltRouter extends Component {
                         render={props => {
                             return (<UIDemo {...props} />)
                         }} />
+                    <Route path="/">
+                        <NotFoundPage />
+                    </Route>
                 </Switch>
             </BrowserRouter>
         )
