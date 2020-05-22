@@ -1,21 +1,16 @@
 import Home from "../components/ui/Pages/Home";
 import React, { Component } from "react";
-import { BrowserRouter, Route, Switch, withRouter, Link } from "react-router-dom";
+import { BrowserRouter, Route, Switch, withRouter, Link, Redirect } from "react-router-dom";
 import CreatePost from "../components/CreatePost";
 import Navigation from '../components/Navigation'
 import LearnPage from '../components/ui/Pages/LearnPage'
 import AuthPage from "../containers/AuthPage";
-import { serviceFactory } from '../services/ServiceFactory'
 import UserMessage from "../components/UserMessage";
 import ProfilePage from "../components/ProfilePage";
 import PostDetail from "../components/PostDetail";
-import Debugger from '../components/DebugConsole/Debugger'
-import Fab from '@material-ui/core/Fab';
-import BugReportIcon from '@material-ui/icons/BugReport';
 import About from '../components/About'
 import UIDemo from "../components/ui/UIDemo";
 import Brew from "../components/ui/Pages/Brew";
-import { ThemedButton } from "../components/ui/Elements/Buttons";
 import AppContext from '../contexts/AppContext';
 import BrewNew from "../components/ui/Pages/BrewNew";
 import Shop from '../components/ui/Pages/Shop'
@@ -48,8 +43,6 @@ class SpiltRouter extends Component {
                     }
                     } />
                 <Switch>
-                    <Route path="/debug"
-                        render={props => <Debugger {...props} />} />
                     <Route exact path="/signup"
                         render={props => <AuthPage {...props}
                             signIn={false}
@@ -59,8 +52,9 @@ class SpiltRouter extends Component {
                         render={props => <AuthPage {...props}
                             signIn={true}
                             loginUser={loginUser} />} />
-                    <Route exact path="/"
-                        component={Home} />
+                    <Route exact path="/" >
+                        <Redirect to="/posts" />
+                    </Route>
 
                     <Route exact path="/shop"
                         render={props => {
@@ -85,6 +79,7 @@ class SpiltRouter extends Component {
                         }} />
                     <Route path={"/brew/new"}
                         render={props => {
+                            if(!this.context.currentUser) { return <Redirect to={{pathname: "/signin", from: props.location}}/>}
                             return (<BrewNew {...props} />)
                         }} />
                     <Route exact path="/brew/:recipeId"
@@ -93,6 +88,7 @@ class SpiltRouter extends Component {
                         }} />
                     <Route path="/posts/:id/edit"
                         render={props => {
+                            if(!this.context.currentUser) { return <Redirect to={{pathname: "/signin", from: props.location}}/>}
                             return (<CreatePost edit={true} {...props} />)
                         }} />
                     <Route path="/posts/new"
@@ -114,21 +110,6 @@ class SpiltRouter extends Component {
                             return (<UIDemo {...props} />)
                         }} />
                 </Switch>
-                <div className="flexer space-even"
-                    style={{
-                        padding: 32,
-                        background: this.context.theme.background
-                    }}>
-                    <Link to="/debug">
-                        <Fab>
-                            <BugReportIcon />
-                        </Fab>
-                    </Link>
-                    <ThemedButton
-                        onClick={this.context.toggleTheme}>
-                        {`${this.context.theme.name} Theme`}
-                    </ThemedButton>
-                </div>
             </BrowserRouter>
         )
     }

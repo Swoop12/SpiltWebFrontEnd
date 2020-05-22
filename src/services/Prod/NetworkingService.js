@@ -2,7 +2,7 @@ import axios from 'axios';
 
 class NetworkingService {
 
-    baseUrl = "http://localhost:4001/api/"
+    baseUrl = "/api/"
 
     networkCall(method, path, data, params) {
         return new Promise((resolve, reject) => {

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import SpiltLogo from '../images/SpiltLogo.jpg';
 import { serviceFactory } from '../services/ServiceFactory';
 import AppContext from '../contexts/AppContext';
+import { Title1 } from '../components/ui/Elements/Typography'
 
 class AuthForm extends Component {
 
@@ -115,9 +116,7 @@ class AuthForm extends Component {
     render() {
         return (
             <div className="auth-container content-card">
-                <img className="logo-image"
-                    src={SpiltLogo}
-                    alt="Spilt.Coffee Logo" />
+                <Title1>Welcome to Generic Coffee</Title1>
                 <form className="auth-form"
                     onSubmit={this.handleFormSubmit}>
                     {this.props.signIn ? this.signInInputs() : this.signUpInputs()}

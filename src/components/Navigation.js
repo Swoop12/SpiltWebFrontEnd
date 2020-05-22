@@ -57,6 +57,7 @@ class Navigation extends React.Component {
     render() {
         let rightNavItems = () => {
             const { currentUser } = this.context
+            debugger
             if (currentUser) {
                 return (
                     <div style={{

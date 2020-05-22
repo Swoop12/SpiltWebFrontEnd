@@ -4,6 +4,29 @@ import GradientBackground from '../Elements/Gradients'
 import { Title1, ExternalLink } from '../Elements/Typography'
 import ImageView from '../Elements/ImageView'
 
+export function BannerViewModelFromProduct(product) {
+    if (!product) { return undefined }
+    return {
+        title: product.name,
+        linkTitle: `From ${product.seller}`,
+        link: product.productLink,
+        photoUrl: product.photoUrl
+    }
+}
+
+
+export function BannerViewModelFromRecipe(recipe) {
+    if (!recipe) { return undefined }
+    var author = recipe.author ? recipe.author.name : null
+    var byLine = author ? `By ${recipe.author.name}` : undefined
+    return {
+        title: recipe.title,
+        linkTitle: byLine,
+        link: undefined,
+        photoUrl: recipe.coverPhotoUrl
+    }
+}
+
 class Banner extends Component {
 
     static contextType = AppContext
@@ -34,37 +57,39 @@ class Banner extends Component {
                     display: 'flex',
                     alignItems: 'flex-end',
                 }}>
-                    <GradientBackground
-                        start={topGradientColor}
-                        end={bottomGradientColor}
-                        direction="top"
+                <GradientBackground
+                    start={topGradientColor}
+                    end={bottomGradientColor}
+                    direction="top"
+                    style={{
+                        padding: "8px",
+                        color: "white",
+                        height: "50%",
+                        position: "absolute",
+                        top: '50%',
+                        display: "flex",
+                        flexDirection: "column"
+                    }} >
+                    <div style={{ flexGrow: "20" }} />
+                    <div className="flexer"
                         style={{
-                            padding: "8px",
+                            width: "100%",
+                            alignItems: "baseline",
+                            padding: "0 16px"
+                        }}>
+                        <Title1 style={{
                             color: "white",
-                            height: "50%",
-                            position: "absolute",
-                            top: '50%',
-                            display: "flex",
-                            flexDirection: "column"
-                        }} >
-                        <div style={{flexGrow: "20"}}/>
-                        <div className="flexer"
-                            style={{width: "100%",
-                                    alignItems: "baseline",
-                                    padding: "0 16px"}}>
-                            <Title1 style={{
-                                color: "white",
-                                flexGrow: "1",
-                                textAlign: "center"
-                            }}>
-                                {this.props.title}
-                            </Title1>
-                            <ExternalLink
-                                href={this.props.link}
-                            >{this.props.linkTitle}
-                            </ExternalLink>
-                        </div>
-                    </GradientBackground>
+                            flexGrow: "1",
+                            textAlign: "center"
+                        }}>
+                            {this.props.title}
+                        </Title1>
+                        <ExternalLink
+                            href={this.props.link}
+                        >{this.props.linkTitle}
+                        </ExternalLink>
+                    </div>
+                </GradientBackground>
             </ImageView>
         )
     }

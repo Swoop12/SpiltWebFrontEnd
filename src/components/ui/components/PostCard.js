@@ -53,7 +53,7 @@ class PostCard extends React.Component {
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         return (
             <InternalLink to={`/posts/${post._id}`}>
-                <Card className="horizontal-container space-between"
+                <Card className="horizontal-container space-between post-card"
                     style={{
                         padding: '0',
                         margin: '0'
@@ -62,7 +62,7 @@ class PostCard extends React.Component {
                         style={{ width: "100%" }}>
                         {(post.coverPhotoUrl.length > 1) && (
                             <img
-                                className="post-card-image img-fluid"
+                                className="post-card-image"
                                 src={post.coverPhotoUrl}
                                 alt={post.title}
                             />)}

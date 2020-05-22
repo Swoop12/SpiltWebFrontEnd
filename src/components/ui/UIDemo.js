@@ -36,7 +36,6 @@ class UIDemo extends Component {
                 </div>
                             <StackedFilter
                                 optionTree={["Elements", "Components"]}
-                                selected={["Elements"]}
                                 onChange={this.onDemoSelectionChange}
                             />
                             <Switch>

@@ -7,6 +7,8 @@ import AppContext from '../../../contexts/AppContext'
 import ImageConverter from '../Elements/ImageUpload'
 import TextField from '../Elements/TextField'
 import { serviceFactory } from '../../../services/ServiceFactory'
+import { Link } from 'react-router-dom'
+import { Button } from 'antd'
 
 class ShopDetail extends Component {
 
@@ -53,14 +55,11 @@ class ShopDetail extends Component {
                 {this.state.seller}
             </ExternalLink>,
             <Body>{this.state.description}</Body>,
-            <PrimaryButton>
-                <a href={this.state.productLink}
-                    style={{
-                        textDecoration: 'none',
-                    }}>
+            <a href={this.state.productLink}>
+                <Button size="large" type="primary">
                     See Seller Website
-                </a>
-            </PrimaryButton>,
+                </Button>
+            </a>,
         ])
     }
 
@@ -69,7 +68,6 @@ class ShopDetail extends Component {
     }
 
     render() {
-        debugger
         return (
             <div
                 className="container vertical-container align-all-center standard-spacing-container"

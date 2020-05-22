@@ -3,7 +3,7 @@ import Card from '../Elements/Card'
 import ImageView from '../Elements/ImageView';
 import { OutlineButton } from '../Elements/Buttons';
 import { Link } from "react-router-dom";
-import { Title1, Body, Caption1 } from '../Elements/Typography'
+import { Title1, Body, Subhead } from '../Elements/Typography'
 import GradientBackground from '../Elements/Gradients';
 import { themes } from '../Elements/Theme';
 import AppContext from '../../../contexts/AppContext'
@@ -21,7 +21,7 @@ class FeaturedContent extends React.Component {
             date: 'January 4th, 2020',
             isFeatured: true,
             coverPhotoUrl: "https://cdn.cnn.com/cnnnext/dam/assets/150929101049-black-coffee-stock-super-tease.jpg",
-            roasterInfo: {
+            author: {
                 name: "Patrick Adcock",
                 id: "3519Z"
             }
@@ -33,6 +33,8 @@ class FeaturedContent extends React.Component {
         let theme = this.context.theme
         let topGradientColor = "#000000"
         let bottomGradientColor = "#EEEEEE17"
+        const date = new Date(post.date)
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         return (
             <Card style={{ padding: '0' }}>
                 <ImageView src={post.coverPhotoUrl}
@@ -50,25 +52,25 @@ class FeaturedContent extends React.Component {
                                 padding: '24px'
                             }}>
                             <Title1
-                                style={{color: "white"}}
+                                style={{ color: "white" }}
                             >
-                            {post.title}
+                                {post.title}
                             </Title1>
                             <div className="vertical-container align-all-end">
-                                <Body style={{padding: '0', margin: '0'}}>
-                                    {post.roasterInfo.name
-                                }</Body>
-                                <Caption1 style={{padding: '0', margin: '0'}}>
-                                    {post.date}
-                                </Caption1>
+                                <Body style={{ padding: '0', margin: '0' }}>
+                                    {post.author.name}
+                                </Body>
+                                <Subhead style={{ padding: '0', margin: '0' }}>
+                                    {date.toLocaleDateString('en-US', options)}
+                                </Subhead>
                             </div>
                         </div>
                     </GradientBackground>
                 </ImageView>
                 <div className="vertical-container flex-center"
-                    style={{padding: '16px'}}>
-                    <Body style={{color: theme.text}}>{post.bodyText}</Body>
-                    <Link to={`/posts/${post.id}`}>
+                    style={{ padding: '16px' }}>
+                    <Body style={{ color: theme.text }}>{post.bodyText}</Body>
+                    <Link to={`/posts/${post._id}`}>
                         <OutlineButton>More</OutlineButton>
                     </Link>
                 </div>

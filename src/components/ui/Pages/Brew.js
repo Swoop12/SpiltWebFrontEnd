@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Banner from '../components/Banner'
+import Banner, { BannerViewModelFromRecipe } from '../components/Banner'
 import StackedFilter from '../Elements/StackedFilter'
 import { recipes } from '../../../services/Mock/MockDatabase'
 import RecipeList from '../Elements/RecipeList'
@@ -32,28 +32,28 @@ class Brew extends Component {
 
     componentDidMount() {
         this.recipeService.loadRecipes()
-            .then(recipes => {
+            .then(({ featured, recipes }) => {
                 debugger
-                this.setState({ recipes })
+                this.setState({ recipes, featured })
             })
     }
 
     render() {
+        const bannerViewModel = BannerViewModelFromRecipe(this.state.featured)
         return (
             <div
                 style={{ background: this.context.theme.background }}>
-                <Banner
-                    props={this.props.banner}
-                />
-                <StackedFilter
+                <Banner {...bannerViewModel} />
+                {/* <StackedFilter
                     optionTree={brewFilters}
-                    selected={[brewFilters[0]]} />
-                <div className="container">
-                    <RecipeList
-                        {...this.props}
-                        recipes={this.state.recipes}
-                    />
-                </div>
+                    selected={[brewFilters[0]]} /> */}
+                {/* <div className="container"> */}
+                <RecipeList
+                    {...this.props}
+                    recipes={this.state.recipes}
+                />
+                {/* </div> */}
+                {this.context.currentUser && (
                 <CreateButton
                     link={this.props.match.path + "/new"}
                     style={{
@@ -61,6 +61,7 @@ class Brew extends Component {
                         left: "90vw",
                         bottom: "32px"
                     }} />
+                )}
             </div>
         )
     }

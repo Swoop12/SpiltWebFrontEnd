@@ -1,6 +1,6 @@
 import React, { Component, useContext } from 'react'
 import AppContext from '../../../contexts/AppContext'
-import Banner from '../components/Banner'
+import Banner, { BannerViewModelFromProduct } from '../components/Banner'
 import StackedFilter from '../Elements/StackedFilter'
 import ProductList from './ProductList'
 import {CreateButton} from '../Elements/Buttons'
@@ -15,8 +15,9 @@ class Shop extends Component {
 
     componentDidMount = () => {
         serviceFactory.productService().fetchProducts()
-        .then(products => {
-            this.setState({ products })
+        .then(productResponse => {
+            const {products, featured} = productResponse
+            this.setState({ products, featured })
         })
     }
 
@@ -34,18 +35,20 @@ class Shop extends Component {
 
     render() {
         const theme = this.context.theme
+        const bannerViewModel = BannerViewModelFromProduct(this.state.featured)
         return (
-
             <div style={{ background: theme.background }}>
-                <Banner />
-                <StackedFilter
+                <Banner {...bannerViewModel} />
+                {/* <StackedFilter
                     optionTree={optionsTree}
                     selected={this.state.filterSelection}
-                    onChange={this.onFilterSelectionChange} />
+                    onChange={this.onFilterSelectionChange} /> */}
                 <ProductList 
                     {...this.props}
                     products={this.state.products}
                 />
+                {this.context.currentUser && (
+
                 <CreateButton 
                     link={this.props.match.path + "/new"}
                     style={{
@@ -53,6 +56,7 @@ class Shop extends Component {
                         right: "32px",
                         bottom: "32px"
                     }}/>
+                )}
             </div>
         )
     }

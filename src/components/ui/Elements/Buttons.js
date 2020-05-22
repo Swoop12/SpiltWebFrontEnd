@@ -5,6 +5,8 @@ import AppContext from '../../../contexts/AppContext'
 import { Link } from 'react-router-dom';
 import { relative } from 'path';
 import Card from './Card'
+import { EditOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons"
+import { Button } from 'antd';
 
 export class SimpleButton extends React.Component {
     static contextType = AppContext
@@ -138,15 +140,31 @@ function ActionButton(props) {
 }
 
 export function CreateButton(props) {
-    return (<ActionButton icon="fas fa-plus" color="primary" {...props} />)
+    return (
+        <Link to={props.link}>
+            <Button type="primary" shape="round" size="large"  {...props} >
+                CREATE
+            </Button>
+        </Link>
+    )
 }
 
 export function EditButton(props) {
-    return (<ActionButton icon="fas fa-edit" color="tertiary" {...props} />)
+    return (
+        <Link to={props.link}>
+            <Button type="primary" shape="round" size="large"{...props} >EDIT</Button>
+        </Link>
+
+    )
+
 }
 
 export function DeleteButton(props) {
-    return (<ActionButton icon="fas fa-trash" color="danger" {...props} />)
+    return (
+        <Link to={props.link}>
+            <Button type="danger" shape="round" size="large" {...props} >DELETE</Button>
+        </Link>
+    )
 }
 
 CreateButton.defaultProps = { link: "/new" }

@@ -6,6 +6,9 @@ import SectionHeader from '../Elements/SectionHeader';
 import Spinner from 'react-spinkit'
 import AppContext from '../../../contexts/AppContext';
 import { CreateButton } from '../Elements/Buttons';
+import { Button, message } from 'antd';
+import { EditOutlined, PlusOutlined, DeleteOutlined } from "@ant-design/icons"
+
 
 class LearnPage extends React.Component {
 
@@ -20,15 +23,24 @@ class LearnPage extends React.Component {
     }
 
     componentDidMount = () => {
-        const query = { status: "published" }
+        const query = { status: "published", featured: "true" }
         this.setState({ loading: true })
         serviceFactory.postService().loadPosts(query)
-            .then(posts => {
+            .then(postResponse => {
                 this.setState({
-                    posts,
+                    featured: postResponse.featured,
+                    posts: postResponse.posts,
                     loading: false
                 })
+            }).catch(error => {
+                message.error("Whoops Something went wrong fetching these posts")
             })
+    }
+
+    featured = () => {
+        if (this.state.featured) {
+            return <FeaturedContent post={this.state.featured} />
+        }
     }
 
     render() {
@@ -37,18 +49,19 @@ class LearnPage extends React.Component {
         } else {
             return (
                 <div style={{ backgroundColor: this.context.theme.background }}>
-                    <FeaturedContent />
+                    {this.featured()}
                     <SectionHeader>Recent Posts</SectionHeader>
                     <div className="light-container">
                         <PostList posts={this.state.posts} />
                     </div>
-                    <CreateButton
+                    {this.context.currentUser && (<CreateButton
                         link={"/posts/new"}
                         style={{
                             position: "fixed",
-                            left: "90vw",
+                            right: "32px",
                             bottom: "32px"
                         }} />
+                    )}
                 </div>
             )
         }

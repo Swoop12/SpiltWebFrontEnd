@@ -1,12 +1,10 @@
 import Quill from 'quill';
 import React, { Component } from 'react'
 import EditorToolbar from './EditorToolbar'
-import { UniqueId, cleanUrl } from '../services/Utils'
-import { serviceFactory } from '../services/ServiceFactory'
+import { cleanUrl } from '../services/Utils'
 
-import 'quill/dist/quill.bubble.css';
+// import 'quill/dist/quill.bubble.css';
 import '../styles/TextEditor.css'
-import { relative } from 'path';
 
 // MARK: - INLINE BLOTS
 let Inline = Quill.import('blots/inline');
@@ -325,7 +323,7 @@ class QuillEditor extends Component {
                 'flex-grow': '2',
                 'position': 'relative'
             }}>
-                <div id="editor"
+                <div id="editor-container"
                     ref={this.editorRef}>
                 </div>
                 {this.toolBar()}

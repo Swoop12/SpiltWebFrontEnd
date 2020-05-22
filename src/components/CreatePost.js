@@ -1,11 +1,7 @@
 import React from 'react';
 import PostService from '../services/Prod/PostService';
-import 'react-quill/dist/quill.bubble.css'
 import QuillEditor from './QuillEditor'
 import { serviceFactory } from '../services/ServiceFactory'
-import UploadImagePopup from '../containers/UploadImagePopup';
-import { UniqueId } from '../services/Utils'
-import { Modal } from '@material-ui/core';
 import AppContext from '../contexts/AppContext'
 import Saving from './ui/Elements/Previews/Saving';
 import ImageConverter from './ui/Elements/ImageUpload';
@@ -176,7 +172,7 @@ class CreatePost extends React.Component {
   render() {
     if (this.state.isLoading === true) { return <h1>Loading...</h1> }
     return (
-      <div 
+      <div
         className="medium-container full-canvas"
         style={{
           color: this.context.theme.text,
@@ -189,7 +185,7 @@ class CreatePost extends React.Component {
           className='editor-input'
           value={this.titleValue()}
           onChange={this.handleInputChange}
-          style={{color: this.context.theme.text}} />
+          style={{ color: this.context.theme.text }} />
         <div style={{ width: "100%" }}>
           <ImageConverter
             onUpload={this.coverArtUploadCallback}

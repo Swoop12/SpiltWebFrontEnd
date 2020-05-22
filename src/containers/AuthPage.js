@@ -17,7 +17,6 @@ function AuthPage(props) {
                     </SimpleButton>
                 </InternalLink>
             </div>
-            <SlideShow photos={appScreenShots} />
             <div className="auth-subpage">
                 <AuthForm {...props} />
                 <AlreadySignedUp signIn={props.signIn} />

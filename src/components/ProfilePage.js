@@ -76,16 +76,15 @@ class ProfilePage extends Component {
 
     fetchPosts = () => {
         postService.loadPosts(this.authorPredicate(), ['author'])
-            .then(posts => {
-                debugger
-                this.setState({ posts })
+            .then(postResponse => {
+                this.setState({ posts: postResponse.posts })
             })
     }
 
     fetchProducts = () => {
         productService.fetchProducts(this.authorPredicate())
-            .then(products => {
-                this.setState({ products })
+            .then(productResponse => {
+                this.setState({ products: productResponse.products })
             })
     }
 

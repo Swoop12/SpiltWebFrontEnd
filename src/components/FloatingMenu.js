@@ -1,19 +1,19 @@
 import React from 'react';
 import '../styles/ProfileStyles.css'
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 
 function FloatingMenu(props) {
-    debugger
+    const history = useHistory()
     return (
         <div className="floating-menu">
             <div className="content-card floating-content">
-                <Link to={`/profile/${props.currentUser._id}/posts`} 
+                <Link to={`/profile/${props.currentUser.id}/posts`} 
                     className="editor-item">Profile</Link>
                 <div to="/signin" 
                     className="editor-item">
                     <div onClick={ () => {
                         props.logout()
-                        props.history.push("/signin")
+                        history.push("/signin")
                     }}>
                         Sign Out
                     </div>

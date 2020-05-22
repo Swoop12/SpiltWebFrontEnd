@@ -133,7 +133,7 @@ class ShopTemplate extends Component {
                 </PrimaryButton>
                 {this.state.edit && (
                     <DeleteButton
-                        action={this.onDelete}
+                        onClick={this.onDelete}
                         style={{
                             position: "fixed",
                             left: "90vw",

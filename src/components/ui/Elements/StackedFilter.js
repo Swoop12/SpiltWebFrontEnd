@@ -129,7 +129,9 @@ class StackedFilter extends Component {
     }
 
     buildlayers = () => {
-        var selections = this.props.selected.slice()
+        if (this.props.selected) {
+            var selections = this.props.selected.slice()
+        }
         var currentTree = this.props.optionTree
         var layers = []
         while (selections) {
@@ -165,7 +167,7 @@ class StackedFilter extends Component {
 
     render() {
         return (
-            <div style={{width: "100%"}}>
+            <div style={{ width: "100%" }}>
                 {this.layersForTree(this.props.optionTree)}
             </div>
         )
